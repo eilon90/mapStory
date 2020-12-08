@@ -1,0 +1,27 @@
+{
+  "name": "mapstory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CrazyDiamond520/mapStory.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CrazyDiamond520/mapStory/issues"
+  },
+  "homepage": "https://github.com/CrazyDiamond520/mapStory#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "handlebars": "^4.7.6",
+    "jquery": "^3.5.1",
+    "mongoose": "^5.11.5",
+    "urllib": "^2.36.1"
+  }
+}
