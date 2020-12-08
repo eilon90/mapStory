@@ -43,6 +43,7 @@
             <p class="show_stories">
               <i class="fas fa qrcode"></i>
               Show Stories
+              <div class="stories"></div>
             </p>
           </li>
         </ul>
@@ -51,13 +52,44 @@
         <div id="mapid"></div>
         <button id="add_button"><i class="fas fa-plus"></i></button>
       </div>
+      <div id="event"></div>
+      <div id="events"></div>
+      
     </section>
+
+    <script id="story-template" type="text/x-handlebars-template">
+      <p class="storyTitle">{{title}}</p>
+      <p class="storyDescription">{{description}}</p>
+      <div class="storyEvents">
+        {{#each events}}
+        <p class="event">{{this.title}}</p>
+        {{/each}}
+      </div>
+    </script>
+
+    <script id="stories-template" type="text/x-handlebars-template">
+      {{#each stories}}
+      <p class ="story">{{this.title}}</p>
+      {{/each}}
+    </script>
+
+    <script id="event-template" type="text/x-handlebars-template">
+      <div class="eventTitle">{{title}}</div>
+      <div class="eventDescription">{{description}}</div>
+      <div class="eventPhotos">
+        {{#each photos}}
+        <img src="{{this.src}}" alt="photo">
+        {{/each}}
+      </div>
+    </script>
+  
     <script
       src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
       integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
       crossorigin=""
     ></script>
     <script src="jquery/dist/jquery.js"></script>
+    <script src="handlebars/dist/handlebars.js"></script>
     <script>
         $(document).ready(function(){
             $("#new_story_input").hide()
