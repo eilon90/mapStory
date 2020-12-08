@@ -50,7 +50,11 @@ button{
     border-radius: 3px;
     background-color: darkmagenta;
     color: white;
+    cursor: pointer;
 
 }
 
+p{
+    cursor: pointer;
+}
 
