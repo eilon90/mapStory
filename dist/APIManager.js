@@ -18,14 +18,14 @@ class APIManager{
     }
     async deleteEvent(eventTitle){
         await $.ajax({
-            method: "put",
+            method: "delete",
             url: `/event/${this.story.title}/${eventTitle}`,//something to write     
           })
         const eventIndex = this.story.events.findIndex(e => e.title === eventTitle)
         this.story.events.splice(eventIndex, 1)
     }
-    async updateEvent(event){
-
+    async updateEvent(event, update){
+        //update is {parameterTitle : value of text input , ...}
     }
     //story {title, description, events}
     async createStory(story){
