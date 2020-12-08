@@ -11,19 +11,18 @@ class APIManager{
     async createEvent(event){
         await $.ajax({
             method: "post",
-            url: '',//something to write
+            url: `/event/${this.story.title}`,
             data: {event: event, storyTitle: this.story.title}
           })
         this.story.events.push(event)
     }
     async deleteEvent(eventTitle){
         await $.ajax({
-            method: "delete",
-            url: ``,//something to write     
+            method: "put",
+            url: `/event/${this.story.title}/${eventTitle}`,//something to write     
           })
         const eventIndex = this.story.events.findIndex(e => e.title === eventTitle)
         this.story.events.splice(eventIndex, 1)
-       
     }
     async updateEvent(event){
 
@@ -33,7 +32,7 @@ class APIManager{
         story.events = []
         await $.ajax({
             method: "post",
-            url: '',//something to write
+            url: '/story',
             data:story
           })
           this.stories.push(story)
@@ -45,7 +44,7 @@ class APIManager{
     async deleteStory(storyTitle){
         await $.ajax({
             method: "delete",
-            url: `/${storyTitle}`,//something to write     
+            url: `/story/${storyTitle}`,//something to write     
           })
           const storyIndex = this.stories.findIndex(s => s.title === storyTitle)
           this.stories.splice(storyIndex, 1)
