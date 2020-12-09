@@ -55,14 +55,16 @@ $(".new_story").on("click", function(){
     $("#new_story_input").toggle() 
 })
 
-$("#new_story_button").on("click", function(){
+$("#new_story_button").on("click", async function(){
     const title = $("#story_title_input").val()
     const des = $("#story_des_input").val()
     const newStory = { 
         title: title,
         description: des
     }
-    apimanager.createStory(newStory)
+    await apimanager.createStory(newStory)
+    $("#new_story_input").toggle()
+    await renderer.renderStories(apimanager.stories)
 })
 
 $(".show_stories").on("click", function(){
