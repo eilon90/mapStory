@@ -3,7 +3,7 @@ let renderer
 let apimanager 
 let map
 let markerGroup;
-
+let searchMarker;
 const loadPage = async function(){
     renderer = new Renderer()
     apimanager = new APIManager()
@@ -18,7 +18,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
    accessToken: 'your.mapbox.access.token'
 }).addTo(map);
 markerGroup = L.layerGroup().addTo(map)
-let searchMarker;
+
 await apimanager.getStories()
 await renderer.renderStories(apimanager.stories)
 await getCountriesList();

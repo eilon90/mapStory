@@ -65,6 +65,8 @@ router.get('/countries', function(req, res){
 router.get('/search/:address/:country', function(req, res) {
     urllib.request(`https://api.opencagedata.com/geocode/v1/json?q=${req.params.address}, ${req.params.country}&key=91ffffa3e2f84a4f8ce2f9763bc49bce&pretty=1`, function(err, response) {
         const data = JSON.parse(response.toString());
+        console.log(data);
+        
         if (data.results[0].confidence === 1) {
             res.send({error: true});
         }
