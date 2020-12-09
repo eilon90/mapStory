@@ -2,6 +2,9 @@ class APIManager{
     constructor(){
         this.stories = []
         this.story = null //should reference to object story
+        this.countries = [];
+        this.searchResults = [];
+        this.location = {address: ''};
     }
     //event {title, description, longitude, latitude, photos}
     async getStories(){
@@ -50,38 +53,22 @@ class APIManager{
           this.stories.splice(storyIndex, 1)
     }
     connectStory = storyTitle =>{ this.story = this.stories.find(s => s.title === storyTitle)}
-    // storyIndex = ()=> this.stories.findIndex(s => s.title === this.storyTitle)
-    // eventIndex = (eventTitle, StoryIndex) => this.stories[storyIndex()].events.findIndex()
-    // eventIndex = eventTitle => this.story.events.findIndex(e => e.title === eventTitle)
+
+    async getCountries() {
+        const countriesList = await $.get('/countries');
+        countriesList.forEach(c => this.countries.push(c));
+    }
+
+    async getResults(country, address) {
+        const results = await $.get(`/search/${address}/${country}`);
+        // results.forEach(r => this.searchResults.push(r));
+        this.searchResults = results;
+    }
+
+    async getAddress(lat, lng) {
+        const address = await $.get(`/address/${lat}/${lng}`);
+        this.location.address = address;
+    }
 }
 
-// const api = new APIManager()
-// api.stories = [
-//     {title: "elementry school", description: "i don't remember", events: []},
-//     {title: "high school", description: "cool", events: [
-//         {title: "10th grade", description: "funny", longitude: 24324, latitude: 243.24, photos:[]},
-//         {title: "tawjihi", description: "stressful", longitude: 24324, latitude: 243.24, photos:[]},
-//         {title: "competition", description: "", longitude: 24324, latitude: 243.24, photos:[]}
-//     ]},
-//     {title: "university", description: "long", events: [
-//         {title: "pharmD", description: "stress", longitude: 34.67, latitude: 243.24, photos:[]},
-//         {title: "cs", description: "changing environment", longitude: 09.45, latitude: 243.24, photos:[]}
-//     ]},
-//     {title: "jobless", description: "boring", events: [
-//         {title: "10th grade", description: "funny", longitude: 24324, latitude: 243.24, photos:[]}
-//     ]}
-// ]
-    //event {title, description, longitude, latitude, photos}
-
-//     api.connectStory("high school")
-//     console.log(api.story)
-    // api.createStory({title:"trip", description: " awesome"})
-    
-    // api.createEvent({title: "haifa", description: "hot", longitude: 24.67, latitude: 293.24, photos:[]})
-//     api.connectStory("high school")
-//     api.deleteEvent("tawjihi")
-//     api.deleteStory("university")
-
-    
-//     console.log(api.stories)
 

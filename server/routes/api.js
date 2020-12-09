@@ -54,6 +54,31 @@ router.delete('/event/:story/:event', async function(req, res) {
     res.end();
 })
 
+router.get('/countries', function(req, res){
+    urllib.request(`https://restcountries.eu/rest/v2/all`, function(err, response) {
+        const data = JSON.parse(response.toString());
+        const countries = data.map(d => {return {country: d.name}});
+        res.send(countries);
+    })
+})
+
+router.get('/search/:address/:country', function(req, res) {
+    urllib.request(`https://api.opencagedata.com/geocode/v1/json?q=${req.params.address}, ${req.params.country}&key=91ffffa3e2f84a4f8ce2f9763bc49bce&pretty=1`, function(err, response) {
+        const data = JSON.parse(response.toString());
+        const results = data.results.map(d => {return {longtitude: d.geometry.lng, latitude: d.geometry.lat}});
+        res.send(results);
+    })
+})
+
+
+router.get('/address/:lat/:lng', function(req, res){
+    urllib.request(`https://api.opencagedata.com/geocode/v1/json?q=${req.params.lat}%2C+${req.params.lng}&key=91ffffa3e2f84a4f8ce2f9763bc49bce&pretty=1`, function(err, response) {
+        const data = JSON.parse(response.toString());
+        const result = {address: data.results[0].formatted};
+        res.send(result);
+    })
+})
+
 
 
 
