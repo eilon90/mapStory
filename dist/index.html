@@ -70,13 +70,14 @@
       <div class="storyEvents">
         {{#each events}}
         <p class="event">{{this.title}}</p>
-        {{/each}}
-      </div>
-    </script>
+            {{/each}}
+        </div>
+        </script>
 
-    <script id="stories-template" type="text/x-handlebars-template">
+        <script id="stories-template" type="text/x-handlebars-template">
       {{#each stories}}
       <p class ="story">{{this.title}}</p>
+      <div class="delete_story">delete story</div>
       {{/each}}
     </script>
 

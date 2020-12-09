@@ -60,5 +60,8 @@ $("#add_button").on("click", function(){
     $("#new_event_input").toggle()
 })
 
-
+$("story delete button").on("click", function(){
+    const storyTitle = $(this).closest(".story").text()
+    apimanager.deleteStory(storyTitle)
+})
 
