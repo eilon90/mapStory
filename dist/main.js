@@ -122,7 +122,6 @@ $(".stories").on("click", ".story", function(){
     // renderer.renderStories(apimanager.stories)
     $(this).css("color", "red")//change color
     $(".storyInfo").empty()
-    console.log($(this).text().trim());
     apimanager.connectStory($(this).text().trim())
     markerGroup.clearLayers()
     renderer.renderStory(markerGroup, apimanager.story, divToRenderOn)
@@ -178,9 +177,11 @@ $('#countries-selector').on('change', async function() {
         }});
 })
 
-$(".delete_event").on("click", function(){
-    const eventTitle = $(this).closest(".eventTitle").text()
+$("body").on("click", ".delete_event", function(){
+    const eventTitle = $(this).closest(".event_container").find(".eventTitle").text()
+    console.log(eventTitle)
     apimanager.deleteEvent(eventTitle)
+    $(".event_container").hide()
 })
 
 $("body").on("click", ".close_event_form", function(){
