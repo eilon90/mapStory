@@ -51,17 +51,17 @@
       <div id="map_container">
         <div id="mapid"></div>
         <button id="add_button"><i class="fas fa-plus"></i></button>
-        <div id="new_event_input">
-            <label for="event_title">title</label>
-            <input type="text" id="event_title_input" />
-            <label for="event_des">description</label>
-            <input type="text" id="event_des_input" />
-            <button id="new_event_button">save event</button>
-        </div>
+        
       </div>
       <div id="event"></div>
       <div id="events"></div>
-      
+      <div id="new_event_input">
+        <!-- <label for="event_title">title</label>
+        <input type="text" id="event_title_input" />
+        <label for="event_des">description</label>
+        <input type="text" id="event_des_input" />
+        <button id="new_event_button">save event</button> -->
+    </div>
     </section>
 
     <script id="story-template" type="text/x-handlebars-template">
@@ -89,6 +89,14 @@
         {{/each}}
       </div>
     </script>
+
+    <script id="eventForm-template" type="text/x-handlebars-template">
+            <label for="event_title">title</label>
+            <input type="text" id="event_title_input" />
+            <label for="event_des">description</label>
+            <input type="text" id="event_des_input" />
+            <button class="new_event_button" data-lng="{{lng}}" data-lat="{{lat}}">save event</button>
+    </script>
   
     <script
       src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -104,7 +112,7 @@
     </script>
     <script>
         $(document).ready(function(){
-            $("#new_event_input").hide()
+            // $("#new_event_input").hide()
         })
     </script>
     <script src="APIManager.js"></script>

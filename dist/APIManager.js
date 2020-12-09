@@ -50,6 +50,7 @@ class APIManager{
           this.stories.splice(storyIndex, 1)
     }
     connectStory = storyTitle =>{ this.story = this.stories.find(s => s.title === storyTitle)}
+    searchEvent = latlng => this.story.events.find(e=> e.longtitude == latlng.lng && e.latitude == latlng.lat)
     // storyIndex = ()=> this.stories.findIndex(s => s.title === this.storyTitle)
     // eventIndex = (eventTitle, StoryIndex) => this.stories[storyIndex()].events.findIndex()
     // eventIndex = eventTitle => this.story.events.findIndex(e => e.title === eventTitle)
