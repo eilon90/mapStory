@@ -1,23 +1,59 @@
+let renderer
+let apimanager 
+let map
 
-const renderer = new Renderer()
-const apimanager = new APIManager()
 
-const map = L.map('mapid', {minZoom: 2}).setView([39.63, 3.33], 2);
+
+const loadPage = async function(){
+    renderer = new Renderer()
+    apimanager = new APIManager()
+
+map = L.map('mapid', {minZoom: 2}).setView([39.63, 3.33], 2);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWlsb245MCIsImEiOiJja2lkaG1nZ2wwMWM3MnJsYmt0NmhjaXd4In0.FIqX_7bwQX0hh3o8FJj8Vg', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'your.mapbox.access.token'
+   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+   maxZoom: 18,
+   id: 'mapbox/streets-v11',
+   tileSize: 512,
+   zoomOffset: -1,
+   accessToken: 'your.mapbox.access.token'
 }).addTo(map);
+
 let searchMarker;
 
+await apimanager.getStories()
+await renderer.renderStories(apimanager.stories)
 
+
+await getCountriesList();
+}
+
+
+loadPage()
+
+async function onMapClick(e) {
+    apimanager.connectStory("whatever")
+    const isDisabled = $("#add_button").attr('disabled')
+    if(isDisabled==="disabled" && apimanager.story){
+        // const marker = L.marker(e.latlng).addTo(map).on('click', onEventClick);
+        // marker.bindPopup("").openPopup();
+        const latlng = {lng: e.latlng.lng, lat: e.latlng.lat}
+        renderer.renderEventForm(latlng)
+        $("#new_event_input").show()
+    }else{
+      await displayAddress(e)
+    }
+
+}
+map.on('click', onMapClick);
+
+function onEventClick(e){
+    renderer.renderEvent(apimanager.searchEvent(this.getLatLng()))
+    $("#new_event_input").show()
+    
+}
 $(".new_story").on("click", function(){
     $("#new_story_input").toggle() 
 })
-
 
 $("#new_story_button").on("click", function(){
     const title = $("#story_title_input").val()
@@ -34,23 +70,34 @@ $(".show_stories").on("click", function(){
     renderer.renderStories(allStories)
 })
 
-$("#new_event_button").on("click", function(){
 
-    const title = $("some title").val()
-    const des = $("some_html_input").val()
-    const longitude = $("some value").val()
-    const latitude = $("some value").val()
+
+$("#new_event_input").on("click",".new_event_button", async function(){//hide and remove disable the add button
+    const title = $("#event_title_input").val()
+    const description = $("#event_des_input").val()
+    const longtitude = $(this).data("lng")
+    const latitude = $(this).data("lat")
+
     const newEvent = {
-        title: title,
-        description: des,
-        longtitude:longitude,
-        latitude: latitude
+        title,
+        description,
+        longtitude,
+        latitude,
+        photos: []
     }
-    apimanager.createEvent(newEvent)
+    await apimanager.createEvent(newEvent)
+    const marker = L.marker([latitude, longtitude]).addTo(map).on('click', onEventClick);
+    $("#new_event_input").empty()
+    $("#new_event_input").hide()
+    $("#add_button").prop("disabled", false)
 })
 
 $("#add_button").on("click", function(){
-    $("#new_event_input").toggle()
+    $("#add_button").attr("disabled", true);
+})
+
+$("body").dblclick( function(){
+    $("#new_event_input").hide() 
 })
 
 $(".delete_story").on("click", function(){
@@ -64,7 +111,7 @@ async function getCountriesList() {
     const countries = apimanager.countries;
     renderer.addCountries(countries);
 }
-getCountriesList();
+
 
 $('#search-button').on('click', async function() {
     const country = $('#countries-selector').val();
@@ -93,13 +140,14 @@ $('#search-button').on('click', async function() {
     $('#search-input').val('');
 })
 
-map.on('click', async function(e) {
-    const lat = e.latlng.lat;
+
+async function displayAddress(e){
+   const lat = e.latlng.lat;
     const lng = e.latlng.lng;
     await apimanager.getAddress(lat, lng);
     const address = apimanager.location.address;
     renderer.printAddress(address);
-})
+}
 
 $('#countries-selector').on('change', async function() {
     const country = $('#countries-selector').val();
@@ -119,4 +167,7 @@ $(".delete_event").on("click", function(){
     const eventTitle = $(this).closest(".eventTitle").text()
     apimanager.deleteEvent(eventTitle)
 })
+
+
+
 

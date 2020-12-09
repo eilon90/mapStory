@@ -55,18 +55,16 @@
 
         <button id="add_button"><i class="fas fa-plus"></i></button>
 
-        <div id="new_event_input">
-            <label for="event_title">title</label>
-            <input type="text" id="event_title_input" />
-            <label for="event_des">description</label>
-            <input type="text" id="event_des_input" />
-            <button id="new_event_button">save event</button>
-        </div>
-
       </div>
       <div id="event"></div>
       <div id="events"></div>
-      
+      <div id="new_event_input">
+        <!-- <label for="event_title">title</label>
+        <input type="text" id="event_title_input" />
+        <label for="event_des">description</label>
+        <input type="text" id="event_des_input" />
+        <button id="new_event_button">save event</button> -->
+    </div>
     </section>
 
     <script id="story-template" type="text/x-handlebars-template">
@@ -97,6 +95,14 @@
       <div class="delete_event">delete event</div>
     </script>
 
+
+<script id="eventForm-template" type="text/x-handlebars-template">
+            <label for="event_title">title</label>
+            <input type="text" id="event_title_input" />
+            <label for="event_des">description</label>
+            <input type="text" id="event_des_input" />
+            <button class="new_event_button" data-lng="{{lng}}" data-lat="{{lat}}">save event</button>
+    </script>
     <script id = "countries-template" type = "text/x-handlebars-template">
         {{#each list}}
             <option>{{country}}</option>
@@ -107,6 +113,7 @@
         <h3 id = "address-text">{{address}}</h3>
     </script>
 
+
     <script>
         $(document).ready(function(){
             $("#new_story_input").hide()
@@ -115,7 +122,7 @@
     
     <script>
         $(document).ready(function(){
-            $("#new_event_input").hide()
+            // $("#new_event_input").hide()
         })
     </script>
   
