@@ -54,6 +54,7 @@ class APIManager{
     }
     connectStory = storyTitle =>{ this.story = this.stories.find(s => s.title === storyTitle)}
 
+  searchEvent = latlng => this.story.events.find(e=> e.longtitude == latlng.lng && e.latitude == latlng.lat)
     async getCountries() {
         const countriesList = await $.get('/countries');
         countriesList.forEach(c => this.countries.push(c));

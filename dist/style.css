@@ -65,6 +65,7 @@
 #mapid{
     height: 700px;
     width: 750px;
+    z-index:9;
 }
 
 #map_container{
@@ -94,6 +95,7 @@ p{
     cursor: pointer;
 }
 
+
 .delete_event{
     cursor: pointer;
     border: 1px solid transparent;
@@ -109,3 +111,14 @@ p{
     background-color: darkmagenta;
     color: white;
 }
+#new_event_input{
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width:500px;
+    height: 500px;
+    left: 40%;
+    top: 10%;
+    background-color:white;
+}
+
