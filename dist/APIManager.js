@@ -43,13 +43,14 @@ class APIManager{
           this.stories.push(story)
           this.story = this.stories[this.stories.length -1]
     }
-    updateStory(param, update){
+    updateStory(param, update){}
 
 
   searchEvent = (latlng) =>
     {return this.story.events.find(
       (e) => e.longtitude == latlng.lng && e.latitude == latlng.lat
-    );}
+    )}
+
   async getCountries() {
     const countriesList = await $.get("/countries");
     countriesList.forEach((c) => this.countries.push(c));
