@@ -79,5 +79,15 @@ class APIManager{
         const bounds = await $.get(`/bounds/${country}`);
         this.zoomBounds = bounds;
     }
+    
+    async deleteStory(storyTitle){
+        await $.ajax({
+            method: "delete",
+            url: `/story/${storyTitle}`,//something to write     
+          })
+          const storyIndex = this.stories.findIndex(s => s.title === storyTitle)
+          this.stories.splice(storyIndex, 1)
+    }
 
 }
+
