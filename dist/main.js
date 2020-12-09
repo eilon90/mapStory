@@ -92,9 +92,10 @@ $("body").dblclick( function(){
     $("#new_event_input").hide() 
 })
 
-$(".delete_story").on("click", function(){
+$("body").on("click", ".delete_story", async function(){
     const storyTitle = $(this).closest(".story").text()
-    apimanager.deleteStory(storyTitle)
+   await apimanager.deleteStory(storyTitle)
+   await renderer.renderStories(apimanager.stories)
 })
 
 

@@ -26,8 +26,7 @@
           </li>
           <li>
             <p class="show_stories">
-              <i class="fas fa qrcode"></i>
-              Show Stories
+                            
               <div class="stories"></div>
             </p>
           </li>
@@ -79,8 +78,9 @@
 
         <script id="stories-template" type="text/x-handlebars-template">
       {{#each stories}}
-      <p class ="story">{{this.title}}</p>
-      <div class="delete_story">delete story</div>
+      <div class ="story">{{this.title}}
+        <button class="delete_story"><i class="fas fa-trash"></i></button>
+      </div>
       {{/each}}
     </script>
 
@@ -113,21 +113,15 @@
         <h3 id = "address-text">{{address}}</h3>
     </script>
 
+    <script src="jquery/dist/jquery.js"></script>
 
     <script>
         $(document).ready(function(){
             $("#new_story_input").hide()
         })
     </script>
-    
-    <script>
-        $(document).ready(function(){
-            // $("#new_event_input").hide()
-        })
-    </script>
   
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <script src="jquery/dist/jquery.js"></script>
     <script src="handlebars/dist/handlebars.js"></script>
     <script src="APIManager.js"></script>
     <script src="renderer.js"></script>
