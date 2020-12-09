@@ -27,7 +27,40 @@
     border-bottom: 1px solid black;
 }
 
+#search{
+    width: 750px;
+    height: 100px;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr 4fr 1fr;
+    grid-template-rows: 3fr, 1fr;
+    grid-template-areas: "sp se in bu" "er er er er";
+    grid-gap: 3px;
+    align-items: center;
+}
 
+#countries-selector {
+    display: inline-block;
+    grid-area: se;
+}
+
+#search-span {
+    grid-area: sp;
+}
+
+#search-input {
+    grid-area: in;
+}
+
+#search-button {
+    grid-area: bu;
+}
+
+#search-error {
+    grid-area: er; 
+    font-size: 20px;
+    color: red;
+    margin-top: 0;
+}
 
 #mapid{
     height: 700px;
@@ -41,6 +74,10 @@
     margin: auto;
 }
 
+#address-text {
+    font-size: 20px;
+}
+
 section{
     display: flex;
     flex-direction: row;
@@ -52,13 +89,28 @@ button{
     background-color: darkmagenta;
     color: white;
     cursor: pointer;
-
 }
 
 p{
     cursor: pointer;
 }
 
+
+.delete_event{
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: darkmagenta;
+    color: white;
+}
+
+.delete_story{
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: darkmagenta;
+    color: white;
+}
 #new_event_input{
     display: none;
     position: absolute;
@@ -69,3 +121,4 @@ p{
     top: 10%;
     background-color:white;
 }
+
