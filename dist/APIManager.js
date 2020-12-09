@@ -32,6 +32,7 @@ class APIManager{
     async updateEvent(event, update){
         //update is {parameterTitle : value of text input , ...}
     }
+    connectStory = storyTitle =>{ this.story = this.stories.find(s => s.title === storyTitle)}
     //story {title, description, events}
     async createStory(story){
         story.events = []

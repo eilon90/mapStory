@@ -6,6 +6,7 @@ class Renderer {
     const source = $("#story-template").html();
     const template = Handlebars.compile(source);
     const newHTML = template(story);
+    $(thi).empty()
     $(thi).append(newHTML);
   }
 

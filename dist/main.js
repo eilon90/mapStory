@@ -46,9 +46,18 @@ function onEventClick(e) {
   $("#new_event_input").show();
 }
 
-$(".new_story").on("click", function(){
-    $("#new_story_input").toggle() 
+
+
+
+$("body").on("click", ".delete_story", async function(){
+    const storyTitle = $(this).closest(".story").text()
+   await apimanager.deleteStory(storyTitle)
+   await renderer.renderStories(apimanager.stories)
 })
+
+$(".new_story").on("click", function () {
+  $("#new_story_input").toggle();
+});
 
 $("#new_story_button").on("click", async function(){
     const title = $("#story_title_input").val()
@@ -61,61 +70,6 @@ $("#new_story_button").on("click", async function(){
     $("#new_story_input").toggle()
     await renderer.renderStories(apimanager.stories)
 })
-
-$(".show_stories").on("click", function(){
-    const allStories = apimanager.getStories()
-    renderer.renderStories(allStories)
-})
-
-
-
-$("#new_event_input").on("click",".new_event_button", async function(){//hide and remove disable the add button
-    const title = $("#event_title_input").val()
-    const description = $("#event_des_input").val()
-    const longtitude = $(this).data("lng")
-    const latitude = $(this).data("lat")
-
-    const newEvent = {
-        title,
-        description,
-        longtitude,
-        latitude,
-        photos: []
-    }
-    await apimanager.createEvent(newEvent)
-    const marker = L.marker([latitude, longtitude]).addTo(map).on('click', onEventClick);
-    $("#new_event_input").empty()
-    $("#new_event_input").hide()
-    $("#add_button").prop("disabled", false)
-})
-
-$("#add_button").on("click", function(){
-    $("#add_button").attr("disabled", true);
-})
-
-$("body").dblclick( function(){
-    $("#new_event_input").hide() 
-})
-
-$("body").on("click", ".delete_story", async function(){
-    const storyTitle = $(this).closest(".story").text()
-   await apimanager.deleteStory(storyTitle)
-   await renderer.renderStories(apimanager.stories)
-})
-
-$(".new_story").on("click", function () {
-  $("#new_story_input").toggle();
-});
-
-$("#new_story_button").on("click", function () {
-  const title = $("#story_title_input").val();
-  const des = $("#story_des_input").val();
-  const newStory = {
-    title: title,
-    description: des,
-  };
-  apimanager.createStory(newStory);
-});
 
 $(".show_stories").on("click", function () {
   const allStories = apimanager.getStories();
@@ -140,6 +94,11 @@ $("#new_event_input").on("click", ".new_event_button", async function () {
   $("#new_event_input").empty();
   $("#new_event_input").hide();
   $("#add_button").prop("disabled", false);
+  renderer.renderStories(apimanager.stories)
+  const activeStory = $(".story").filter(`[data-title="${apimanager.story.title}"]`)
+  $(activeStory).css("color", "red")//change color
+  markerGroup.clearLayers()
+  renderer.renderStory(markerGroup, apimanager.story, $(activeStory).next())
 });
 
 $("#add_button").on("click", function () {
@@ -148,11 +107,6 @@ $("#add_button").on("click", function () {
 
 $("body").dblclick(function () {
   $("#new_event_input").hide();
-});
-
-$(".delete_story").on("click", function () {
-  const storyTitle = $(this).closest(".story").text();
-  apimanager.deleteStory(storyTitle);
 });
 
 async function getCountriesList() {
@@ -168,7 +122,8 @@ $(".stories").on("click", ".story", function(){
     // renderer.renderStories(apimanager.stories)
     $(this).css("color", "red")//change color
     $(".storyInfo").empty()
-    apimanager.connectStory($(this).text())
+    console.log($(this).text().trim());
+    apimanager.connectStory($(this).text().trim())
     markerGroup.clearLayers()
     renderer.renderStory(markerGroup, apimanager.story, divToRenderOn)
 })
