@@ -12,13 +12,6 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'your.mapbox.access.token'
 }).addTo(map);
 
-function onMapClick(e) {
-        alert("You clicked the map at " + e.latlng.lat);
-        alert("You clicked the map at " + e.latlng.lng);
-
-    }
-    map.on('click', onMapClick);
-
 
 $(".new_story").on("click", function(){
     $("#new_story_input").toggle() 
@@ -59,6 +52,43 @@ $("#new_event_button").on("click", function(){
 $("#add_button").on("click", function(){
     $("#new_event_input").toggle()
 })
+
+async function getCountriesList() {
+    await apimanager.getCountries();
+    const countries = apimanager.countries;
+    renderer.addCountries(countries);
+}
+getCountriesList();
+
+$('#search-button').on('click', async function() {
+    const country = $('#countries-selector').val();
+    const address = $('#search-input').val();
+    if (country === '--Select Country--') {
+        renderer.noCountry();
+        return;
+    } 
+    await apimanager.getResults(country, address);
+    const results = apimanager.searchResults;
+    map.removeLayer(marker);
+    map.setView([results[0].latitude, results[0].longtitude], 13, map.getZoom(), {
+        "animate": true,
+        "pan": {
+          "duration": 10
+        }});
+    marker = L.marker([results[0].latitude, results[0].longtitude]).addTo(map);
+    $('#search-input').val('');
+})
+
+map.on('click', async function(e) {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    await apimanager.getAddress(lat, lng);
+    const address = apimanager.location.address;
+    renderer.printAddress(address);
+})
+
+
+
 
 
 

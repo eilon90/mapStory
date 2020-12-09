@@ -3,20 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
     <title>Maps Story</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -26,11 +15,7 @@
       <div class="sidebar">
         <header>Maps Story</header>
         <ul id="sidebar_menu">
-          <li>
-            <p class="new_story">
-              <i class="fas fa qrcode"></i>
-              New Story
-            </p>
+          <li><p class="new_story"><i class="fas fa qrcode"></i>New Story</p>
             <div id="new_story_input">
               <label for="story_title">title</label>
               <input type="text" id="story_title_input" />
@@ -48,9 +33,28 @@
           </li>
         </ul>
       </div>
+
+      
       <div id="map_container">
+        
+        <div id = "search">
+            <span id = "search-span">search address:</span>
+            <select id = countries-selector>
+                <option>--Select Country--</option>
+            </select>
+            <input id = "search-input" type = "text">
+            <button id = "search-button">Search</button>
+            <h4 id = "search-error"></h4>
+        </div>
+
         <div id="mapid"></div>
+        
+
+        <div id = "address"></div>
+        <div id = "clickAddress"></div>
+
         <button id="add_button"><i class="fas fa-plus"></i></button>
+
         <div id="new_event_input">
             <label for="event_title">title</label>
             <input type="text" id="event_title_input" />
@@ -58,6 +62,7 @@
             <input type="text" id="event_des_input" />
             <button id="new_event_button">save event</button>
         </div>
+
       </div>
       <div id="event"></div>
       <div id="events"></div>
@@ -89,24 +94,32 @@
         {{/each}}
       </div>
     </script>
-  
-    <script
-      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""
-    ></script>
-    <script src="jquery/dist/jquery.js"></script>
-    <script src="handlebars/dist/handlebars.js"></script>
+
+    <script id = "countries-template" type = "text/x-handlebars-template">
+        {{#each list}}
+            <option>{{country}}</option>
+        {{/each}}
+    </script>
+
+    <script id = "address-template" type = "text/x-handlebars-template">
+        <h3 id = "address-text">{{address}}</h3>
+    </script>
+
     <script>
         $(document).ready(function(){
             $("#new_story_input").hide()
         })
     </script>
+    
     <script>
         $(document).ready(function(){
             $("#new_event_input").hide()
         })
     </script>
+  
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="jquery/dist/jquery.js"></script>
+    <script src="handlebars/dist/handlebars.js"></script>
     <script src="APIManager.js"></script>
     <script src="renderer.js"></script>
     <script src="main.js"></script>
