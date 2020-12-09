@@ -1,5 +1,6 @@
-// const renderer = new Renderer
-const apimanager = new APIManager
+
+const renderer = new Renderer()
+const apimanager = new APIManager()
 
 const map = L.map('mapid').setView([51.505, -0.09], 13);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWlsb245MCIsImEiOiJja2lkaG1nZ2wwMWM3MnJsYmt0NmhjaXd4In0.FIqX_7bwQX0hh3o8FJj8Vg', {
@@ -23,6 +24,7 @@ $(".new_story").on("click", function(){
     $("#new_story_input").toggle() 
 })
 
+
 $("#new_story_button").on("click", function(){
     const title = $("#story_title_input").val()
     const des = $("#story_des_input").val()
@@ -32,7 +34,6 @@ $("#new_story_button").on("click", function(){
     }
     apimanager.createStory(newStory)
 })
-
 
 $(".show_stories").on("click", function(){
     const allStories = apimanager.getStories()

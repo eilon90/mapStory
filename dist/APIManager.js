@@ -12,7 +12,7 @@ class APIManager{
         await $.ajax({
             method: "post",
             url: `/event/${this.story.title}`,
-            data: {event: event, storyTitle: this.story.title}
+            data: event
           })
         this.story.events.push(event)
     }
@@ -71,12 +71,13 @@ class APIManager{
 //         {title: "10th grade", description: "funny", longitude: 24324, latitude: 243.24, photos:[]}
 //     ]}
 // ]
-//     //event {title, description, longitude, latitude, photos}
+    //event {title, description, longitude, latitude, photos}
 
 //     api.connectStory("high school")
 //     console.log(api.story)
-//     api.createStory({title:"trip", description: " awesome"})
-//     api.createEvent({title: "haifa", description: "hot", longitude: 24.67, latitude: 293.24, photos:[]})
+    // api.createStory({title:"trip", description: " awesome"})
+    
+    // api.createEvent({title: "haifa", description: "hot", longitude: 24.67, latitude: 293.24, photos:[]})
 //     api.connectStory("high school")
 //     api.deleteEvent("tawjihi")
 //     api.deleteStory("university")
