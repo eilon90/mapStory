@@ -2,7 +2,7 @@
 const renderer = new Renderer()
 const apimanager = new APIManager()
 
-const map = L.map('mapid').setView([51.505, -0.09], 13);
+const map = L.map('mapid', {minZoom: 2}).setView([39.63, 3.33], 2);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWlsb245MCIsImEiOiJja2lkaG1nZ2wwMWM3MnJsYmt0NmhjaXd4In0.FIqX_7bwQX0hh3o8FJj8Vg', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -11,6 +11,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: 'your.mapbox.access.token'
 }).addTo(map);
+let searchMarker;
 
 
 $(".new_story").on("click", function(){
@@ -34,7 +35,6 @@ $(".show_stories").on("click", function(){
 })
 
 $("#new_event_button").on("click", function(){
-
 
     const title = $("some title").val()
     const des = $("some_html_input").val()
@@ -72,16 +72,24 @@ $('#search-button').on('click', async function() {
     if (country === '--Select Country--') {
         renderer.noCountry();
         return;
+    }
+    if (address === '') {
+        renderer.noAdress();
+        return
     } 
     await apimanager.getResults(country, address);
     const results = apimanager.searchResults;
-    map.removeLayer(marker);
-    map.setView([results[0].latitude, results[0].longtitude], 13, map.getZoom(), {
+    if (results.error === true) {
+        renderer.noResults();
+        return;
+    }
+    if (searchMarker) {map.removeLayer(searchMarker)};
+    map.setView([results[0].latitude, results[0].longtitude], 17, map.getZoom(), {
         "animate": true,
         "pan": {
           "duration": 10
         }});
-    marker = L.marker([results[0].latitude, results[0].longtitude]).addTo(map);
+    searchMarker = L.marker([results[0].latitude, results[0].longtitude]).addTo(map);
     $('#search-input').val('');
 })
 
@@ -93,8 +101,19 @@ map.on('click', async function(e) {
     renderer.printAddress(address);
 })
 
-
-
+$('#countries-selector').on('change', async function() {
+    const country = $('#countries-selector').val();
+    await apimanager.zoomOnCountry(country);
+    const bounds = apimanager.zoomBounds;
+    marker1 = L.marker([bounds.NHLat, bounds.NHLng]);
+    marker2 = L.marker([bounds.SWLat, bounds.SWLng]);
+    const group = new L.featureGroup([marker1, marker2]);
+    map.fitBounds(group.getBounds(), map.getZoom(), {
+        "animate": true,
+        "pan": {
+          "duration": 15
+        }});
+})
 
 $(".delete_event").on("click", function(){
     const eventTitle = $(this).closest(".eventTitle").text()

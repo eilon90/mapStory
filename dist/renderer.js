@@ -44,7 +44,21 @@ class Renderer {
     }
 
     noCountry() {
-        $('#search-error').text(`Please select country before searching`);
+        $('#search-error').text(`Please select a country before searching`);
+        setTimeout(function() {
+            $('#search-error').text('');
+        }, 4000);
+    }
+
+    noAdress() {
+        $('#search-error').text(`Please type an address or place name before searching`);
+        setTimeout(function() {
+            $('#search-error').text('');
+        }, 4000);
+    }
+
+    noResults() {
+        $('#search-error').text(`No results`);
         setTimeout(function() {
             $('#search-error').text('');
         }, 4000);

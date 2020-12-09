@@ -65,8 +65,13 @@ router.get('/countries', function(req, res){
 router.get('/search/:address/:country', function(req, res) {
     urllib.request(`https://api.opencagedata.com/geocode/v1/json?q=${req.params.address}, ${req.params.country}&key=91ffffa3e2f84a4f8ce2f9763bc49bce&pretty=1`, function(err, response) {
         const data = JSON.parse(response.toString());
-        const results = data.results.map(d => {return {longtitude: d.geometry.lng, latitude: d.geometry.lat}});
-        res.send(results);
+        if (data.results[0].confidence === 1) {
+            res.send({error: true});
+        }
+        else {
+            const results = data.results.map(d => {return {longtitude: d.geometry.lng, latitude: d.geometry.lat}});
+            res.send(results);
+        }
     })
 })
 
@@ -77,6 +82,21 @@ router.get('/address/:lat/:lng', function(req, res){
         const result = {address: data.results[0].formatted};
         res.send(result);
     })
+})
+
+router.get('/bounds/:country', function(req, res) {
+    urllib.request(`https://api.opencagedata.com/geocode/v1/json?q=${req.params.country}&key=91ffffa3e2f84a4f8ce2f9763bc49bce&pretty=1`, function(err, response) {
+        const data = JSON.parse(response.toString());
+        const bounds = {
+            NHLat: data.results[0].bounds.northeast.lat,
+            NHLng: data.results[0].bounds.northeast.lng,
+            SWLat: data.results[0].bounds.southwest.lat,
+            SWLng: data.results[0].bounds.southwest.lng
+        }
+        res.send(bounds);
+    })
+
+    // /:NHLat/:NHLng/:SWLat/:SWLng
 })
 
 

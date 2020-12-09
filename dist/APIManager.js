@@ -5,6 +5,7 @@ class APIManager{
         this.countries = [];
         this.searchResults = [];
         this.location = {address: ''};
+        this.zoomBounds = {}
     }
     //event {title, description, longitude, latitude, photos}
     async getStories(){
@@ -61,13 +62,17 @@ class APIManager{
 
     async getResults(country, address) {
         const results = await $.get(`/search/${address}/${country}`);
-        // results.forEach(r => this.searchResults.push(r));
         this.searchResults = results;
     }
 
     async getAddress(lat, lng) {
         const address = await $.get(`/address/${lat}/${lng}`);
         this.location.address = address;
+    }
+
+    async zoomOnCountry(country) {
+        const bounds = await $.get(`/bounds/${country}`);
+        this.zoomBounds = bounds;
     }
 }
 
