@@ -182,3 +182,7 @@ $(".delete_event").on("click", function(){
     const eventTitle = $(this).closest(".eventTitle").text()
     apimanager.deleteEvent(eventTitle)
 })
+
+$("body").on("click", ".close_event_form", function(){
+    $("#new_event_input").hide();
+})
