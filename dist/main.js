@@ -53,6 +53,12 @@ $("#add_button").on("click", function(){
     $("#new_event_input").toggle()
 })
 
+$(".delete_story").on("click", function(){
+    const storyTitle = $(this).closest(".story").text()
+    apimanager.deleteStory(storyTitle)
+})
+
+
 async function getCountriesList() {
     await apimanager.getCountries();
     const countries = apimanager.countries;
@@ -90,5 +96,8 @@ map.on('click', async function(e) {
 
 
 
-
+$(".delete_event").on("click", function(){
+    const eventTitle = $(this).closest(".eventTitle").text()
+    apimanager.deleteEvent(eventTitle)
+})
 
