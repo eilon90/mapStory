@@ -39,6 +39,7 @@ class Renderer {
     $("#countries-selector").append(newHTML);
   }
 
+
   printAddress(location) {
     $("#clickAddress").empty();
     const source = $("#address-template").html();
@@ -46,6 +47,21 @@ class Renderer {
     const newHTML = template(location);
     $("#clickAddress").append(newHTML);
   }
+
+    noAdress() {
+        $('#search-error').text(`Please type an address or place name before searching`);
+        setTimeout(function() {
+            $('#search-error').text('');
+        }, 4000);
+    }
+
+    noResults() {
+        $('#search-error').text(`No results`);
+        setTimeout(function() {
+            $('#search-error').text('');
+        }, 4000);
+    }
+
 
   noCountry() {
     $("#search-error").text(`Please select country before searching`);
