@@ -12,12 +12,12 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'your.mapbox.access.token'
 }).addTo(map);
 
-function onMapClick(e) {
-        alert("You clicked the map at " + e.latlng.lat);
-        alert("You clicked the map at " + e.latlng.lng);
+// function onMapClick(e) {
+//         alert("You clicked the map at " + e.latlng.lat);
+//         alert("You clicked the map at " + e.latlng.lng);
 
-    }
-    map.on('click', onMapClick);
+//     }
+//     map.on('click', onMapClick);
 
 
 $(".new_story").on("click", function(){
@@ -60,5 +60,13 @@ $("#add_button").on("click", function(){
     $("#new_event_input").toggle()
 })
 
+$(".delete_story").on("click", function(){
+    const storyTitle = $(this).closest(".story").text()
+    apimanager.deleteStory(storyTitle)
+})
 
+$(".delete_event").on("click", function(){
+    const eventTitle = $(this).closest(".eventTitle").text()
+    apimanager.deleteEvent(eventTitle)
+})
 

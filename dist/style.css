@@ -58,3 +58,18 @@ p{
     cursor: pointer;
 }
 
+.delete_event{
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: darkmagenta;
+    color: white;
+}
+
+.delete_story{
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: darkmagenta;
+    color: white;
+}
