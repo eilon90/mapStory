@@ -33,6 +33,7 @@ $("#new_story_button").on("click", function(){
         description: des
     }
     apimanager.createStory(newStory)
+    renderer.renderStories()
 })
 
 $(".show_stories").on("click", function(){
@@ -63,6 +64,7 @@ $("#add_button").on("click", function(){
 $(".delete_story").on("click", function(){
     const storyTitle = $(this).closest(".story").text()
     apimanager.deleteStory(storyTitle)
+    renderer.renderStories
 })
 
 $(".delete_event").on("click", function(){
@@ -70,3 +72,4 @@ $(".delete_event").on("click", function(){
     apimanager.deleteEvent(eventTitle)
 })
 
+renderer.renderStories()
