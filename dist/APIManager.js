@@ -1,3 +1,4 @@
+
 class APIManager{
     constructor(){
         this.stories = []
@@ -31,6 +32,7 @@ class APIManager{
     async updateEvent(event, update){
         //update is {parameterTitle : value of text input , ...}
     }
+    connectStory = storyTitle =>{ this.story = this.stories.find(s => s.title === storyTitle)}
     //story {title, description, events}
     async createStory(story){
         story.events = []
@@ -42,25 +44,27 @@ class APIManager{
           this.stories.push(story)
           this.story = this.stories[this.stories.length -1]
     }
-    updateStory(param, update){
+    updateStory(param, update){}
 
-    }
-    async deleteStory(storyTitle){
-        await $.ajax({
-            method: "delete",
-            url: `/story/${storyTitle}`,//something to write     
-          })
-          const storyIndex = this.stories.findIndex(s => s.title === storyTitle)
-          this.stories.splice(storyIndex, 1)
-    }
-    connectStory = storyTitle =>{ this.story = this.stories.find(s => s.title === storyTitle)}
 
-  searchEvent = latlng => this.story.events.find(e=> e.longtitude == latlng.lng && e.latitude == latlng.lat)
-    async getCountries() {
-        const countriesList = await $.get('/countries');
-        countriesList.forEach(c => this.countries.push(c));
-    }
+  searchEvent = (latlng) =>
+    {return this.story.events.find(
+      (e) => e.longtitude == latlng.lng && e.latitude == latlng.lat
+    )}
 
+  async getCountries() {
+    const countriesList = await $.get("/countries");
+    countriesList.forEach((c) => this.countries.push(c));
+  }
+
+  async getResults(country, address) {
+    const results = await $.get(`/search/${address}/${country}`);
+    // results.forEach(r => this.searchResults.push(r));
+    this.searchResults = results;
+  }
+
+
+ 
     async getResults(country, address) {
         const results = await $.get(`/search/${address}/${country}`);
         this.searchResults = results;
@@ -75,6 +79,5 @@ class APIManager{
         const bounds = await $.get(`/bounds/${country}`);
         this.zoomBounds = bounds;
     }
+
 }
-
-

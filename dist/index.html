@@ -30,13 +30,13 @@
           </li>
           <li>
             <p class="show_stories">
-              <i class="fas fa qrcode"></i>
-              Show Stories
+                            
               <div class="stories"></div>
             </p>
           </li>
         </ul>
       </div>
+<<<<<<< HEAD
         
       <div id = "search">
           <span id = "search-span">search address:</span>
@@ -61,31 +61,66 @@
       <div id="events"></div>
       <div id="new_event_input">
         <!-- <label for="event_title">title</label>
+=======
+      <div id="map_container">
+        
+        <div id = "search">
+            <span id = "search-span">search address:</span>
+            <select id = countries-selector>
+                <option>--Select Country--</option>
+            </select>
+            <input id = "search-input" type = "text">
+            <button id = "search-button">Search</button>
+            <h4 id = "search-error"></h4>
+        </div>
+      <div id="mapid"></div>
+
+
+      <div id="address"></div>
+      <div id="clickAddress"></div>
+
+      <button id="add_button"><i class="fas fa-plus"></i></button>
+
+    </div>
+    <div id="event"></div>
+    <div id="events"></div>
+    <div id="new_event_input">
+      <!-- <label for="event_title">title</label>
+>>>>>>> master
         <input type="text" id="event_title_input" />
         <label for="event_des">description</label>
         <input type="text" id="event_des_input" />
         <button id="new_event_button">save event</button> -->
     </div>
+<<<<<<< HEAD
   </div>
+=======
+  </section>
+>>>>>>> master
 
-    <script id="story-template" type="text/x-handlebars-template">
-      <p class="storyTitle">{{title}}</p>
+  <script id="story-template" type="text/x-handlebars-template">
       <p class="storyDescription">{{description}}</p>
       <div class="storyEvents">
+        <select id="event-selector">
+        <option>--Event--</option>
         {{#each events}}
-        <p class="event">{{this.title}}</p>
+        <option class="event">{{this.title}}</option>
             {{/each}}
-        </div>
+          </select>
+          </div>
         </script>
 
-        <script id="stories-template" type="text/x-handlebars-template">
+  <script id="stories-template" type="text/x-handlebars-template">
       {{#each stories}}
-      <p class ="story">{{this.title}}</p>
-      <div class="delete_story">delete story</div>
+
+      <div class ="story" data-title="{{this.title}}">{{this.title}}
+        <button class="delete_story"><i class="fas fa-trash"></i></button>
+      </div>
+      <div class="storyInfo"></div>
       {{/each}}
     </script>
 
-    <script id="event-template" type="text/x-handlebars-template">
+  <script id="event-template" type="text/x-handlebars-template">
       <div class="eventTitle">{{title}}</div>
       <div class="eventDescription">{{description}}</div>
       <div class="eventPhotos">
@@ -97,33 +132,29 @@
     </script>
 
 
-<script id="eventForm-template" type="text/x-handlebars-template">
-            <label for="event_title">title</label>
-            <input type="text" id="event_title_input" />
-            <label for="event_des">description</label>
-            <input type="text" id="event_des_input" />
-            <button class="new_event_button" data-lng="{{lng}}" data-lat="{{lat}}">save event</button>
-    </script>
-    <script id = "countries-template" type = "text/x-handlebars-template">
-        {{#each list}}
-            <option>{{country}}</option>
-        {{/each}}
-    </script>
+  <script id="eventForm-template" type="text/x-handlebars-template">
+  <label for="event_title">title</label>
+  <input type="text" id="event_title_input" />
+  <label for="event_des">description</label>
+  <input type="text" id="event_des_input" />
+  <button class="new_event_button" data-lng="{{lng}}" data-lat="{{lat}}">save event</button>
+</script>
+  <script id="countries-template" type="text/x-handlebars-template">
+  {{#each list}}
+  <option>{{country}}</option>
+  {{/each}}
+</script>
 
-    <script id = "address-template" type = "text/x-handlebars-template">
-        <h3 id = "address-text">{{address}}</h3>
-    </script>
+  <script id="address-template" type="text/x-handlebars-template">
+  <h3 id = "address-text">{{address}}</h3>
+</script>
+
+    <script src="jquery/dist/jquery.js"></script>
 
     <script src="jquery/dist/jquery.js"></script>
     <script>
         $(document).ready(function(){
             $("#new_story_input").hide()
-        })
-    </script>
-    
-    <script>
-        $(document).ready(function(){
-            // $("#new_event_input").hide()
         })
     </script>
   
@@ -134,3 +165,4 @@
     <script src="main.js"></script>
   </body>
 </html>
+
