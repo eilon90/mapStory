@@ -7,18 +7,21 @@ class Renderer {
     const source = $("#story-template").html();
     const template = Handlebars.compile(source);
     const newHTML = template(story);
+    $(".story").empty()
     $(".story").append(newHTML);
   }
   renderStories(stories) {
     const source = $("#stories-template").html();
     const template = Handlebars.compile(source);
     const newHTML = template({stories});
+    $(".stories").empty()
     $(".stories").append(newHTML);
   }
   renderEvent(event){
     const source = $("#event-template").html();
     const template = Handlebars.compile(source);
     const newHTML = template(event);
+    $("#event").empty()
     $("#event").append(newHTML);
   }
 }
