@@ -1,3 +1,16 @@
+body {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+
+#general-container{
+    width: 100%;
+    margin: 0;
+    background-color: blue;
+}
+
+
 .sidebar{
     position: fixed;
     left: 0;
@@ -6,7 +19,7 @@
     background: #042331;
 }
 
-.sidebar header{
+#sidebar-header{
     font-size: 22px;
     color: white;
     text-align: center;
@@ -78,10 +91,6 @@
     font-size: 20px;
 }
 
-section{
-    display: flex;
-    flex-direction: row;
-}
 
 button{
     border: 1px solid transparent;
