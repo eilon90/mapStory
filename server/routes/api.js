@@ -50,6 +50,7 @@ router.delete('/story/:title', async function(req, res) {
 
 router.delete('/event/:story/:event', async function(req, res) {
     await Story.update({title: req.params.story}, {$pull: {events: {title: req.params.event}}});
+    console.log(req.params)
     console.log(`one event deleted`);
     res.end();
 })
