@@ -27,9 +27,14 @@ router.post('/story', async function(req, res) {
 
 router.post('/event/:story', upload.single("image"), async function(req, res) {
     try {
-        const result = await cloudinary.uploader.upload(req.file.path);
-        req.body.photos =[]
-        req.body.photos.push(result.secure_url)
+        if(req.file){
+            const result = await cloudinary.uploader.upload(req.file.path);
+            req.body.photos =[]
+            req.body.photos.push(result.secure_url)
+
+        }else{
+            req.body.photos =[]
+        }
         const event = new Event({...req.body});
         await Story.update({title: req.params.story}, {$push: {events: event}});
         res.send(event);
