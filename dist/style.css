@@ -121,12 +121,4 @@ p{
     top: 10%;
     background-color:white;
 }
-.storyDescription{
-    height: 3vh;
-    overflow: auto;
-}
-#event-selector{
-    background-color:white;
-    color: black;
-    display: inline-block;
-}
+
