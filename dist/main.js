@@ -4,6 +4,7 @@ let apimanager
 let map
 let markerGroup;
 let searchMarker;
+let button = false
 
 const loadPage = async function(){
     renderer = new Renderer()
@@ -29,14 +30,14 @@ loadPage()
 
 async function onMapClick(e) {
 //   apimanager.connectStory("whatever");
-  const isDisabled = $("#add_button").attr("disabled");
-  if (isDisabled === "disabled" && apimanager.story) {
+  // const isDisabled = $("#add_button").attr("disabled");
+  if (!button) {
     // const marker = L.marker(e.latlng).addTo(map).on('click', onEventClick);
     // marker.bindPopup("").openPopup();
     const latlng = { lng: e.latlng.lng, lat: e.latlng.lat };
     renderer.renderEventForm(latlng);
     $("#new_event_input").show();
-    $("#add_button").css("background-color", "darkmagenta")
+    // $("#add_button").css("background-color", "darkmagenta")
   } else {
     await displayAddress(e);
   }
@@ -73,6 +74,8 @@ $("#new_story_button").on("click", async function(){
     await renderer.renderStories(apimanager.stories)
     $("#story_title_input").val('')
     $("#story_des_input").val('')
+    button = true;
+    $("#add_button").css("background-color", "darkmagenta")
 })
 
 $(".show_stories").on("click", function () {
@@ -119,9 +122,20 @@ $("#new_event_input").on("click", ".new_event_button", async function () {
   renderer.renderStory(markerGroup, apimanager.story, $(activeStory).next())
 });
 
+// $("#add_button").on("click", function () {
+//   $("#add_button").attr("disabled", true);
+//   $("#add_button").css("background-color", "green")
+// });
+
 $("#add_button").on("click", function () {
-  $("#add_button").attr("disabled", true);
-  $("#add_button").css("background-color", "green")
+  switch (button) {
+    case false:  $("#add_button").css("background-color", "darkmagenta");
+    button = true;
+    break;
+    case true: $("#add_button").css("background-color", "green");
+    button = false;
+    break;
+  }
 });
 
 $("body").dblclick(function () {
@@ -142,9 +156,12 @@ $(".stories").on("click", ".story", function(){
     $(this).css("color", "red")//change color
     $(".storyInfo").empty()
     apimanager.connectStory($(this).text().trim())
+    $('#add_button').css('display', 'inline');
+    $('#add-event-title').css('display', 'inline');
     markerGroup.clearLayers()
     $('#story-name').text(apimanager.story.title);
     $('#story-description').text(apimanager.story.description);
+    button = true;
     eventZoom(apimanager.story.events);
     renderer.renderStory(markerGroup, apimanager.story, divToRenderOn)
 })
@@ -200,25 +217,32 @@ $('#countries-selector').on('change', async function() {
 })
 
 function eventZoom(events) {
-  const coordinates = []
+  const coordinates = [];
   events.forEach(e => {
     const marker1 = L.marker([e.latitude, e.longtitude])
     coordinates.push(marker1);
   })
   console.log(coordinates);
-  const group = new L.featureGroup(coordinates);
-  map.fitBounds(group.getBounds(), map.getZoom(), {
-      "animate": true,
-      "pan": {
-        "duration": 15
-      }});
+  if (!coordinates[0])  {
+    return
+  }
+  else {
+    const group = new L.featureGroup(coordinates);
+    map.fitBounds(group.getBounds(), map.getZoom(), {
+        "animate": true,
+        "pan": {
+          "duration": 15
+        }});
+  }
 }
 
 $("body").on("click", ".delete_event", function(){
     const eventTitle = $(this).closest(".event_container").find(".eventTitle").text()
     console.log(eventTitle)
     apimanager.deleteEvent(eventTitle)
+    markerGroup.clearLayers();
     renderer.renderStories(apimanager.stories)
+    renderer.renderStory(markerGroup, apimanager.story);
     $("#new_event_input").hide()
 })
 

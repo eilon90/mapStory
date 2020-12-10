@@ -57,6 +57,10 @@ class APIManager{
     connectStory = storyTitle =>{ this.story = this.stories.find(s => s.title === storyTitle)}
     //story {title, description, events}
     async createStory(story){
+      if (this.stories.some(s => s.title === story.title)) {
+          renderer.sameStoryError();
+          return;
+      }
         story.events = []
         await $.ajax({
             method: "post",

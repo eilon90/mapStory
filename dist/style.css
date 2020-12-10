@@ -207,6 +207,12 @@ body {
     margin-top: 0;
 }
 
+#new-story-error {
+    font-size: 20px;
+    color: red;
+    margin-left: 3%;
+}
+
 #mapid{
     height: 100%;
     width: 90%;
@@ -309,6 +315,7 @@ p{
     margin-left: 10%;
     width: 4%;
     height: 35%;
+    display: none;
 }
 
 #add-event-title{
@@ -316,6 +323,7 @@ p{
     margin-left: 1%;
     font-size: large;
     font-weight: bold;
+    display: none;
 }
 
 label{
