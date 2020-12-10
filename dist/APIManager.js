@@ -13,13 +13,35 @@ class APIManager{
         const stories = await $.get('/stories')
         this.stories = stories
     }
-    async createEvent(event){
-        await $.ajax({
-            method: "post",
-            url: `/event/${this.story.title}`,
-            data: event
-          })
-        this.story.events.push(event)
+    async createEvent(fd){
+      //
+      try{
+        const eventfromDB = await $.ajax({//come and change it 
+        url: `/event/${this.story.title}`,
+        type: "post",
+        data: fd,
+        contentType: false,
+        processData: false,
+        // success: function (response) {
+        //   if (response) {
+        //     $("#img").append(`<img src="${response.avatar}" alt="photo">`)
+        //   } else {
+        //     alert("file not uploaded");
+        //   }
+        // },
+      });
+      this.story.events.push(eventfromDB)
+
+      }catch(err){
+        console.log(err)
+      }
+    
+      //
+        // await $.ajax({
+        //     method: "post",
+        //     url: `/event/${this.story.title}`,
+        //     data: event
+        //   })
     }
     async deleteEvent(eventTitle){
         await $.ajax({

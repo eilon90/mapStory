@@ -91,7 +91,7 @@
       <div class="eventDescription">{{description}}</div>
       <div class="eventPhotos">
         {{#each photos}}
-        <img src="{{this.src}}" alt="photo">
+        <img src="{{this}}" alt="photo">
         {{/each}}
       </div>
       <div class="delete_event">delete event</div>
@@ -104,6 +104,7 @@
   <input type="text" id="event_title_input" />
   <label for="event_des">description</label>
   <input type="text" id="event_des_input" />
+  <input type='file' name='image' class="file"/>
   <button class="new_event_button" data-lng="{{lng}}" data-lat="{{lat}}">save event</button>
   <button class="close_event_form"><i class="fas fa-window-close"></i></button>
 </script>

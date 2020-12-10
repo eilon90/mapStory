@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const cloudinary = require("../../utils/cloudinary");
+const upload = require("../../utils/multer");
 const urllib = require('urllib');
 
 router.use(express.json());
@@ -23,10 +25,18 @@ router.post('/story', async function(req, res) {
     res.end();
 })
 
-router.post('/event/:story', async function(req, res) {
-    const event = new Event({...req.body});
-    await Story.update({title: req.params.story}, {$push: {events: event}});
-    res.end();
+router.post('/event/:story', upload.single("image"), async function(req, res) {
+    try {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        req.body.photos =[]
+        req.body.photos.push(result.secure_url)
+        const event = new Event({...req.body});
+        await Story.update({title: req.params.story}, {$push: {events: event}});
+        res.send(event);
+      } catch (err) {
+        console.log("error: "+err);
+        res.end()
+      }
 })
 
 // router.put('/story/:title', async function(req, res) {

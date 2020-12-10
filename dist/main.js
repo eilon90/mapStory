@@ -82,14 +82,28 @@ $("#new_event_input").on("click", ".new_event_button", async function () {
   const description = $("#event_des_input").val();
   const longtitude = $(this).data("lng");
   const latitude = $(this).data("lat");
-  const newEvent = {
-    title,
-    description,
-    longtitude,
-    latitude,
-    photos: [],
-  };
-  await apimanager.createEvent(newEvent);
+  //
+  const fd = new FormData();
+  const input = $(this).closest("#new_event_input").find(".file")
+  const files = input[0].files;
+  fd.append("title", title)
+  fd.append("description", description)
+  fd.append("longtitude", longtitude)
+  fd.append("latitude",latitude)
+  if (files.length > 0) {
+    fd.append("image", files[0]);
+    console.log(files)
+    console.log(fd);
+  }
+  //
+  // const newEvent = {
+  //   title,
+  //   description,
+  //   longtitude,
+  //   latitude,
+  //   photos: [],
+  // };
+  await apimanager.createEvent(fd);
   const marker = L.marker([latitude, longtitude]).addTo(markerGroup).on("click", onEventClick);
   $("#new_event_input").empty();
   $("#new_event_input").hide();
