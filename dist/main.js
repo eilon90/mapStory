@@ -3,6 +3,7 @@ let renderer
 let apimanager 
 let map
 let markerGroup;
+let searchMarker;
 
 const loadPage = async function(){
     renderer = new Renderer()
@@ -10,7 +11,7 @@ const loadPage = async function(){
 
 map = L.map('mapid', {minZoom: 2}).setView([39.63, 3.33], 2);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZWlsb245MCIsImEiOiJja2lkaG1nZ2wwMWM3MnJsYmt0NmhjaXd4In0.FIqX_7bwQX0hh3o8FJj8Vg', {
-   attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
    maxZoom: 18,
    id: 'mapbox/streets-v11',
    tileSize: 512,
@@ -18,7 +19,6 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
    accessToken: 'your.mapbox.access.token'
 }).addTo(map);
 markerGroup = L.layerGroup().addTo(map)
-let searchMarker;
 await apimanager.getStories()
 await renderer.renderStories(apimanager.stories)
 await getCountriesList();
@@ -35,6 +35,7 @@ async function onMapClick(e) {
     const latlng = { lng: e.latlng.lng, lat: e.latlng.lat };
     renderer.renderEventForm(latlng);
     $("#new_event_input").show();
+    $("#add_button").css("background-color", "darkmagenta")
   } else {
     await displayAddress(e);
   }
@@ -96,13 +97,14 @@ $("#new_event_input").on("click", ".new_event_button", async function () {
   $("#add_button").prop("disabled", false);
   renderer.renderStories(apimanager.stories)
   const activeStory = $(".story").filter(`[data-title="${apimanager.story.title}"]`)
-  $(activeStory).css("color", "red")//change color
+  $(activeStory).css("color", "green")//change color
   markerGroup.clearLayers()
   renderer.renderStory(markerGroup, apimanager.story, $(activeStory).next())
 });
 
 $("#add_button").on("click", function () {
   $("#add_button").attr("disabled", true);
+  $("#add_button").css("background-color", "green")
 });
 
 $("body").dblclick(function () {
@@ -181,9 +183,11 @@ $("body").on("click", ".delete_event", function(){
     const eventTitle = $(this).closest(".event_container").find(".eventTitle").text()
     console.log(eventTitle)
     apimanager.deleteEvent(eventTitle)
-    $(".event_container").hide()
+    renderer.renderStories(apimanager.stories)
+    $("#new_event_input").hide()
 })
 
 $("body").on("click", ".close_event_form", function(){
     $("#new_event_input").hide();
+    $("#add_button").css("background-color", "green")
 })
