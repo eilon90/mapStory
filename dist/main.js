@@ -71,6 +71,8 @@ $("#new_story_button").on("click", async function(){
     await apimanager.createStory(newStory)
     $("#new_story_input").toggle()
     await renderer.renderStories(apimanager.stories)
+    $("#story_title_input").val('')
+    $("#story_des_input").val('')
 })
 
 $(".show_stories").on("click", function () {
@@ -141,6 +143,9 @@ $(".stories").on("click", ".story", function(){
     $(".storyInfo").empty()
     apimanager.connectStory($(this).text().trim())
     markerGroup.clearLayers()
+    $('#story-name').text(apimanager.story.title);
+    $('#story-description').text(apimanager.story.description);
+    eventZoom(apimanager.story.events);
     renderer.renderStory(markerGroup, apimanager.story, divToRenderOn)
 })
 
@@ -193,6 +198,21 @@ $('#countries-selector').on('change', async function() {
           "duration": 15
         }});
 })
+
+function eventZoom(events) {
+  const coordinates = []
+  events.forEach(e => {
+    const marker1 = L.marker([e.latitude, e.longtitude])
+    coordinates.push(marker1);
+  })
+  console.log(coordinates);
+  const group = new L.featureGroup(coordinates);
+  map.fitBounds(group.getBounds(), map.getZoom(), {
+      "animate": true,
+      "pan": {
+        "duration": 15
+      }});
+}
 
 $("body").on("click", ".delete_event", function(){
     const eventTitle = $(this).closest(".event_container").find(".eventTitle").text()

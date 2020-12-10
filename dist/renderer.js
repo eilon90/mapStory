@@ -6,8 +6,8 @@ class Renderer {
     const source = $("#story-template").html();
     const template = Handlebars.compile(source);
     const newHTML = template(story);
-    $(thi).empty()
-    $(thi).append(newHTML);
+    $('#events-list').empty()
+    $('#events-list').append(newHTML);
   }
 
   renderStories(stories) {
@@ -42,11 +42,11 @@ class Renderer {
 
 
   printAddress(location) {
-    $("#clickAddress").empty();
+    $("#showAddress").empty();
     const source = $("#address-template").html();
     const template = Handlebars.compile(source);
     const newHTML = template(location);
-    $("#clickAddress").append(newHTML);
+    $("#showAddress").append(newHTML);
   }
 
     noAdress() {
