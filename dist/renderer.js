@@ -6,8 +6,8 @@ class Renderer {
     const source = $("#story-template").html();
     const template = Handlebars.compile(source);
     const newHTML = template(story);
-    $(thi).empty()
-    $(thi).append(newHTML);
+    $('#events-list').empty()
+    $('#events-list').append(newHTML);
   }
 
   renderStories(stories) {
