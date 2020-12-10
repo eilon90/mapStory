@@ -67,7 +67,14 @@ class Renderer {
   noCountry() {
     $("#search-error").text(`Please select country before searching`);
     setTimeout(function () {
-      $("#search-error").text("");
+      $("#search-error").text('');
+    }, 4000);
+  }
+
+  sameStoryError() {
+    $("#new-story-error").text(`You already have a story with this name`);
+    setTimeout(function () {
+      $("#new-story-error").text('');
     }, 4000);
   }
 }
