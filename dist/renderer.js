@@ -42,11 +42,11 @@ class Renderer {
 
 
   printAddress(location) {
-    $("#clickAddress").empty();
+    $("#showAddress").empty();
     const source = $("#address-template").html();
     const template = Handlebars.compile(source);
     const newHTML = template(location);
-    $("#clickAddress").append(newHTML);
+    $("#showAddress").append(newHTML);
   }
 
     noAdress() {

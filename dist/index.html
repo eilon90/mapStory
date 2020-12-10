@@ -8,60 +8,83 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
     <title>Maps Story</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Frank+Ruhl+Libre:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lemon&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   </head>
   <body>
-    <section>
-      <div class="sidebar">
-        <header>Maps Story</header>
-        <ul id="sidebar_menu">
-          <li><p class="new_story"><i class="fas fa qrcode"></i>New Story</p>
-            <div id="new_story_input">
-              <label for="story_title">title</label>
-              <input type="text" id="story_title_input" />
-              <label for="story_des">description</label>
-              <input type="text" id="story_des_input" />
-              <button id="new_story_button">save story</button>
+      <div id = "general-container">
+          <div id = "header">
+              <h1 id = "header-title">Map <span id = "title-span">your</span> Story</h1>
+          </div>
+
+          <div id="sidebar">
+              <div id = sidebar-header>Your stories</div>
+              <ul id="sidebar_menu">
+                  <li><p class="new_story"><i class="fas fa qrcode"></i>Create a New Story</p>
+                      <div id="new_story_input">
+                          <label for="story_title">title</label>
+                          <input type="text" id="story_title_input" />
+                          <label for="story_des">description</label>
+                          <input type="text" id="story_des_input" />
+                          <button id="new_story_button">save story</button>
+                      </div>
+                  </li>
+                  <li>
+                        <p class="show_stories">
+                            <div class="stories"></div>
+                        </p>
+                  </li>
+              </ul>
+          </div>
+
+          <div id = "story-title">
+            <h4 id = "story-name">(story name)</h4>
+            <h5 id = "story-description">(story description)</h5>
+          </div>
+
+          <div id="map-container">
+              <div id="mapid"></div>
+          </div>
+
+          <div id = "search-and-adress">
+            <div id = "search">
+              <hr id = "hr1">
+              <p id = "searchp">search address:</p>
+              <div id = "select-div">
+                <select id = countries-selector>
+                    <option>--Select Country--</option>
+                </select>
+              </div>
+              <input id = "search-input" type = "text" placeholder=" --Type your search--">
+              <button id = "search-button">Search</button>
+              <h4 id = "search-error"></h4>
             </div>
-          </li>
-          <li>
-            <p class="show_stories">
-                            
-              <div class="stories"></div>
-            </p>
-          </li>
-        </ul>
-      </div>
-      <div id="map_container">
-        
-        <div id = "search">
-            <span id = "search-span">search address:</span>
-            <select id = countries-selector>
-                <option>--Select Country--</option>
-            </select>
-            <input id = "search-input" type = "text">
-            <button id = "search-button">Search</button>
-            <h4 id = "search-error"></h4>
+            <div id="showAddress">
+              <hr id = "hr2">
+              <h6 id = "marker-point-text">Marker point:</h6>
+            </div>
         </div>
-      <div id="mapid"></div>
 
+          <div id= "add-event">
+            <button id="add_button"><i class="fas fa-plus"></i></button>
+            <h6 id = "add-event-title">Add event to your story</h6>
+          </div>
 
-      <div id="address"></div>
-      <div id="clickAddress"></div>
-
-      <button id="add_button"><i class="fas fa-plus"></i></button>
-
-    </div>
-    <div id="event"></div>
-    <div id="events"></div>
-    <div id="new_event_input">
+          <div id="event"></div>
+          <div id="events"></div>
+          <div id="new_event_input">
       <!-- <label for="event_title">title</label>
         <input type="text" id="event_title_input" />
         <label for="event_des">description</label>
         <input type="text" id="event_des_input" />
         <button id="new_event_button">save event</button> -->
-    </div>
-  </section>
+          </div>
+      </div>
 
   <script id="story-template" type="text/x-handlebars-template">
       <p class="storyDescription">{{description}}</p>
@@ -72,16 +95,16 @@
         <option class="event">{{this.title}}</option>
             {{/each}}
           </select>
-          </div>
-        </script>
+      </div>
+  </script>
 
   <script id="stories-template" type="text/x-handlebars-template">
       {{#each stories}}
 
       <div class ="story" data-title="{{this.title}}">{{this.title}}
         <button class="delete_story"><i class="fas fa-trash"></i></button>
+        <div class="storyInfo"></div>
       </div>
-      <div class="storyInfo"></div>
       {{/each}}
     </script>
 
@@ -114,7 +137,9 @@
   {{/each}}
 </script>
 
-  <script id="address-template" type="text/x-handlebars-template">
+<script id="address-template" type="text/x-handlebars-template">
+  <hr id = "hr2">
+  <h6 id = "marker-point-text">Marker point:</h6>
   <h3 id = "address-text">{{address}}</h3>
 </script>
 
