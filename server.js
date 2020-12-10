@@ -3,6 +3,9 @@ const path = require('path');
 const app = express();
 const api = require('./server/routes/api');
 const mongoose = require('mongoose');
+const dotenv = require("dotenv");
+dotenv.config(); 
+
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/mapStory');
 
