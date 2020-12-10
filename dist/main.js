@@ -19,6 +19,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
    accessToken: 'your.mapbox.access.token'
 }).addTo(map);
 markerGroup = L.layerGroup().addTo(map)
+
 await apimanager.getStories()
 await renderer.renderStories(apimanager.stories)
 await getCountriesList();
