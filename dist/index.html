@@ -43,8 +43,8 @@
           </div>
 
           <div id = "story-title">
-            <h4 id = "story-name">(story name)</h4>
-            <h5 id = "story-description">(story description)</h5>
+            <h4 id = "story-name"></h4>
+            <h5 id = "story-description"></h5>
           </div>
 
           <div id="map-container">
@@ -67,6 +67,10 @@
             <div id="showAddress">
               <hr id = "hr2">
               <h6 id = "marker-point-text">Marker point:</h6>
+              <hr id = "hr3">
+            </div>
+            <div id = "events-list">
+
             </div>
         </div>
 
@@ -87,6 +91,7 @@
       </div>
 
   <script id="story-template" type="text/x-handlebars-template">
+      <p class = "storyName">{{title}}</p>
       <p class="storyDescription">{{description}}</p>
       <div class="storyEvents">
         <select id="event-selector">
@@ -110,8 +115,8 @@
 
   <script id="event-template" type="text/x-handlebars-template">
     <div class="event_container">
-      <div class="eventTitle">{{title}}</div>
-      <div class="eventDescription">{{description}}</div>
+      <h4 class="eventTitle">{{title}}</h4>
+      <h5 class="eventDescription">{{description}}</h5>
       <div class="eventPhotos">
         {{#each photos}}
         <img src="{{this}}" alt="photo">
@@ -127,6 +132,7 @@
   <input type="text" id="event_title_input" />
   <label for="event_des">description</label>
   <input type="text" id="event_des_input" />
+  <label for="image">Add photo</label><br>
   <input type='file' name='image' class="file"/>
   <button class="new_event_button" data-lng="{{lng}}" data-lat="{{lat}}">save event</button>
   <button class="close_event_form"><i class="fas fa-window-close"></i></button>
@@ -141,6 +147,7 @@
   <hr id = "hr2">
   <h6 id = "marker-point-text">Marker point:</h6>
   <h3 id = "address-text">{{address}}</h3>
+  <hr id = "hr3">
 </script>
 
     <script src="jquery/dist/jquery.js"></script>
