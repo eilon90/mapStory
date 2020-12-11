@@ -4,7 +4,7 @@ let apimanager
 let map
 let markerGroup;
 let searchMarker;
-let button = false
+let button = true
 
 const loadPage = async function(){
     renderer = new Renderer()

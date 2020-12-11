@@ -10,7 +10,6 @@ router.use(express.urlencoded({extended: false}));
 const Story = require('../models/Story');
 const Event = require('../models/Event');
 
-
 router.get('/stories', async function(req, res) {
     console.log('uploading stories');
     const stories = await Story.find({});
